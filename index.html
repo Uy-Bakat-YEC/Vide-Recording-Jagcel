@@ -1,0 +1,1568 @@
+<!DOCTYPE html>
+<html>
+
+<head>
+
+<meta charset="UTF-8">
+
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+
+<title>
+Jago Excel by YEC.CO.ID
+</title>
+
+
+
+<style>
+
+
+:root{
+
+--bg:#101010;
+--card:#1d1d1d;
+--text:#ffffff;
+--muted:#aaa;
+--primary:#16a34a;
+
+}
+
+
+
+.light{
+
+--bg:#f4f4f4;
+--card:#ffffff;
+--text:#111;
+--muted:#555;
+
+}
+
+
+
+*{
+
+box-sizing:border-box;
+font-family:
+'Segoe UI',
+Arial,
+sans-serif;
+
+}
+
+
+
+body{
+
+margin:0;
+
+background:var(--bg);
+
+color:var(--text);
+
+transition:.3s;
+
+}
+
+
+
+
+
+header{
+
+
+display:flex;
+
+justify-content:space-between;
+
+align-items:center;
+
+padding:18px 25px;
+
+background:var(--card);
+
+position:sticky;
+
+top:0;
+
+z-index:99;
+
+
+}
+
+
+
+.logo{
+
+font-size:22px;
+
+font-weight:bold;
+
+}
+
+
+
+.theme{
+
+font-size:24px;
+
+cursor:pointer;
+
+}
+
+
+
+
+
+.container{
+
+max-width:1200px;
+
+margin:auto;
+
+padding:20px;
+
+}
+
+
+
+
+.login{
+
+max-width:420px;
+
+margin:80px auto;
+
+background:var(--card);
+
+padding:30px;
+
+border-radius:20px;
+
+box-shadow:
+0 10px 30px #0005;
+
+}
+
+
+
+input{
+
+
+width:100%;
+
+padding:14px;
+
+margin:10px 0;
+
+border-radius:12px;
+
+border:none;
+
+background:#333;
+
+color:white;
+
+font-size:15px;
+
+}
+
+
+.light input{
+
+background:#eee;
+
+color:#111;
+
+}
+
+
+
+
+
+button{
+
+
+width:100%;
+
+padding:14px;
+
+border:none;
+
+border-radius:12px;
+
+margin-top:10px;
+
+cursor:pointer;
+
+background:var(--primary);
+
+color:white;
+
+font-size:16px;
+
+transition:.2s;
+
+
+}
+
+
+button:hover{
+
+transform:scale(1.03);
+
+}
+
+
+
+
+
+.card{
+
+
+background:var(--card);
+
+padding:20px;
+
+border-radius:18px;
+
+margin:15px 0;
+
+}
+
+
+
+.grid{
+
+
+display:grid;
+
+grid-template-columns:
+repeat(auto-fit,minmax(260px,1fr));
+
+gap:20px;
+
+
+}
+
+
+
+.batch{
+
+
+cursor:pointer;
+
+transition:.2s;
+
+
+}
+
+
+
+.batch:hover{
+
+transform:translateY(-5px);
+
+}
+
+
+
+
+
+.video-area{
+
+
+display:grid;
+
+grid-template-columns:
+2fr 1fr;
+
+gap:20px;
+
+
+}
+
+
+
+.player{
+
+
+background:black;
+
+height:500px;
+
+border-radius:20px;
+
+overflow:hidden;
+
+
+}
+
+
+iframe{
+
+
+width:100%;
+
+height:100%;
+
+border:0;
+
+
+}
+
+
+
+
+.item{
+
+
+padding:14px;
+
+background:var(--card);
+
+border-radius:12px;
+
+margin:10px 0;
+
+cursor:pointer;
+
+
+}
+
+
+
+.item:hover{
+
+opacity:.8;
+
+}
+
+
+
+
+.back{
+
+background:#555;
+
+}
+
+
+
+.logout{
+
+background:#dc2626;
+
+}
+
+
+
+.hidden{
+
+display:none;
+
+}
+
+
+
+
+.loading{
+
+
+text-align:center;
+
+padding:30px;
+
+
+}
+
+
+
+
+.small{
+
+color:var(--muted);
+
+}
+
+
+
+@media(max-width:800px){
+
+
+.video-area{
+
+display:block;
+
+}
+
+
+.player{
+
+height:280px;
+
+}
+
+
+}
+
+
+</style>
+
+
+</head>
+
+
+<body>
+
+
+<header>
+
+
+<div class="logo">
+
+📗 Jago Excel by YEC.CO.ID
+
+</div>
+
+
+<div 
+class="theme"
+onclick="toggleTheme()">
+
+🌙
+
+</div>
+
+
+</header>
+
+
+
+<div id="app"></div>
+
+
+
+<script>
+
+
+const API_URL =
+"GANTI_URL_APPS_SCRIPT";
+
+
+// ==========================================
+// START APP
+// ==========================================
+
+
+let userData = null;
+
+
+
+window.onload=function(){
+
+loadTheme();
+
+
+let session =
+localStorage.getItem("user");
+
+
+if(session){
+
+
+userData =
+JSON.parse(session);
+
+
+
+if(userData.role=="admin"){
+
+showAdmin();
+
+}
+
+else{
+
+showPeserta();
+
+}
+
+
+}
+else{
+
+
+showLogin();
+
+
+}
+
+
+};
+
+
+
+
+
+// ==========================================
+// THEME
+// ==========================================
+
+
+function toggleTheme(){
+
+
+document.body.classList.toggle("light");
+
+
+let mode =
+document.body.classList.contains("light")
+?
+"light"
+:
+"dark";
+
+
+localStorage.setItem(
+"theme",
+mode
+);
+
+
+}
+
+
+
+function loadTheme(){
+
+
+let theme =
+localStorage.getItem("theme");
+
+
+if(theme=="light"){
+
+document.body.classList.add("light");
+
+}
+
+
+}
+
+
+
+
+
+
+
+// ==========================================
+// LOGIN PAGE
+// ==========================================
+
+
+function showLogin(){
+
+
+document.getElementById("app").innerHTML=`
+
+<div class="container">
+
+
+<div class="login">
+
+
+<h2>
+📗 Jago Excel by YEC.CO.ID
+</h2>
+
+
+<p class="small">
+Masukkan data login
+</p>
+
+
+
+<input 
+id="username"
+placeholder="Nama Lengkap / Username Admin"
+>
+
+
+
+<input 
+id="password"
+type="password"
+placeholder="Kode Batch / Password"
+>
+
+
+
+<button onclick="login()">
+
+🚀 MASUK
+
+</button>
+
+
+
+<div id="message"></div>
+
+
+</div>
+
+
+</div>
+
+`;
+
+
+
+}
+
+
+
+
+
+
+
+// ==========================================
+// PROSES LOGIN
+// ==========================================
+
+
+function login(){
+
+
+let username =
+document.getElementById("username")
+.value;
+
+
+let password =
+document.getElementById("password")
+.value;
+
+
+
+if(
+username=="" ||
+password==""
+){
+
+
+showMessage(
+"Data belum lengkap"
+);
+
+
+return;
+
+}
+
+
+
+showMessage(
+"⏳ Memeriksa data..."
+);
+
+
+
+
+
+// coba peserta dulu
+
+
+fetch(
+
+API_URL+
+
+"?action=loginPeserta"+
+
+"&nama="+
+
+encodeURIComponent(username)+
+
+"&kode="+
+
+encodeURIComponent(password)
+
+)
+
+
+.then(r=>r.json())
+
+
+.then(data=>{
+
+
+if(data.status=="success"){
+
+
+userData=data;
+
+
+saveSession();
+
+
+showPeserta();
+
+
+}
+
+else{
+
+
+// coba admin
+
+
+loginAdmin(
+username,
+password
+);
+
+
+}
+
+
+
+})
+
+.catch(err=>{
+
+
+showMessage(
+"Server error"
+);
+
+
+});
+
+
+
+}
+
+
+
+
+
+
+
+// ==========================================
+// LOGIN ADMIN
+// ==========================================
+
+
+function loginAdmin(username,password){
+
+
+fetch(
+
+API_URL+
+
+"?action=loginAdmin"+
+
+"&username="+
+encodeURIComponent(username)+
+
+"&password="+
+encodeURIComponent(password)
+
+)
+
+
+.then(r=>r.json())
+
+
+.then(data=>{
+
+
+if(data.status=="success"){
+
+
+userData=data;
+
+
+saveSession();
+
+
+showAdmin();
+
+
+}
+
+
+else{
+
+
+showMessage(
+"Nama/Kode tidak ditemukan"
+);
+
+
+}
+
+
+
+});
+
+
+}
+
+
+
+
+
+function showMessage(text){
+
+let msg =
+document.getElementById("message");
+
+
+if(msg){
+
+msg.innerHTML=
+`
+<p class="small">
+${text}
+</p>
+`;
+
+}
+
+}
+
+// ==========================================
+// SESSION
+// ==========================================
+
+
+function saveSession(){
+
+
+localStorage.setItem(
+
+"user",
+
+JSON.stringify(userData)
+
+);
+
+
+}
+
+
+
+function checkSession(){
+
+
+let data =
+localStorage.getItem("user");
+
+
+if(data){
+
+
+userData =
+JSON.parse(data);
+
+
+
+if(userData.role=="admin"){
+
+showAdmin();
+
+}
+else{
+
+showPeserta();
+
+}
+
+
+}
+
+}
+
+
+
+
+
+
+
+function logout(){
+
+
+localStorage.removeItem("user");
+
+
+userData=null;
+
+
+showLogin();
+
+
+}
+
+
+
+
+
+
+
+
+// ==========================================
+// PESERTA DASHBOARD
+// ==========================================
+
+
+function showPeserta(){
+
+
+let html=`
+
+
+<div class="container">
+
+
+<h2>
+Halo 👋 ${userData.nama}
+</h2>
+
+
+<p class="small">
+Selamat belajar di Jago Excel by YEC.CO.ID
+</p>
+
+
+
+<h3>
+📚 Kelas Kamu
+</h3>
+
+
+
+<div class="grid">
+
+
+`;
+
+
+
+
+
+userData.batch.forEach(batch=>{
+
+
+html+=`
+
+<div class="card batch"
+onclick="openClass('${batch.folder}','${batch.name}','${batch.code}')">
+
+
+<h3>
+
+📗 ${batch.name}
+
+</h3>
+
+
+<p>
+
+Kode:
+${batch.code}
+
+</p>
+
+
+<button>
+
+▶ Masuk Kelas
+
+</button>
+
+
+</div>
+
+
+`;
+
+
+
+});
+
+
+
+
+
+html+=`
+
+</div>
+
+
+<button class="logout"
+onclick="logout()">
+
+🚪 Logout
+
+</button>
+
+
+</div>
+
+
+`;
+
+
+
+document.getElementById("app")
+.innerHTML=html;
+
+
+}
+
+
+
+
+
+
+
+
+
+// ==========================================
+// ADMIN DASHBOARD
+// ==========================================
+
+
+function showAdmin(){
+
+
+let html=`
+
+
+<div class="container">
+
+
+<h2>
+👑 Admin Panel
+</h2>
+
+
+<p>
+📗 Jago Excel by YEC.CO.ID
+</p>
+
+
+
+<div class="card">
+
+
+<h3>
+Menu Admin
+</h3>
+
+
+<button onclick="showAllBatch()">
+
+📚 Lihat Semua Kelas
+
+</button>
+
+
+
+<button>
+
+👥 Kelola Peserta
+
+</button>
+
+
+
+<button>
+
+⚙️ Pengaturan
+
+</button>
+
+
+
+</div>
+
+
+
+
+<div id="adminContent"></div>
+
+
+
+
+<button class="logout"
+onclick="logout()">
+
+🚪 Logout
+
+</button>
+
+
+
+</div>
+
+
+`;
+
+
+
+document.getElementById("app")
+.innerHTML=html;
+
+
+showAllBatch();
+
+
+}
+
+
+
+
+
+
+
+
+function showAllBatch(){
+
+
+let box =
+document.getElementById(
+"adminContent"
+);
+
+
+
+let html=`
+
+
+<h3>
+Semua Batch
+</h3>
+
+
+<div class="grid">
+
+`;
+
+
+
+userData.batch.forEach(batch=>{
+
+
+html+=`
+
+<div class="card batch"
+onclick="openClass('${batch.folder}','${batch.name}','${batch.code}')">
+
+
+<h3>
+📚 ${batch.name}
+</h3>
+
+
+<p>
+${batch.code}
+</p>
+
+
+<button>
+▶ Buka
+</button>
+
+
+</div>
+
+
+`;
+
+
+});
+
+
+
+html+=`
+
+</div>
+
+`;
+
+
+
+box.innerHTML=html;
+
+
+}
+
+// ==========================================
+// OPEN CLASS
+// ==========================================
+
+
+function openClass(folder,name,code){
+
+
+document.getElementById("app").innerHTML=`
+
+<div class="container">
+
+<h2>
+
+📚 ${name}
+
+</h2>
+
+
+<div class="video-area">
+
+<div>
+
+<div class="player" id="player">
+
+Pilih video
+
+</div>
+
+</div>
+
+
+<div id="content">
+
+<div class="loading">
+
+⏳ Memuat video.
+
+</div>
+
+</div>
+
+
+</div>
+
+
+<button onclick="backDashboard()">
+
+⬅ Kembali
+
+</button>
+
+
+</div>
+
+`;
+
+
+loadFolder(folder,code);
+
+
+}
+
+
+
+
+// ==========================================
+// LOAD FOLDER
+// ==========================================
+
+
+function loadFolder(folder,code){
+
+
+
+fetch(
+
+API_URL+
+
+"?action=content"+
+"&folder="+folder+
+"&kode="+code
+
+)
+
+
+
+.then(r=>r.json())
+
+
+.then(data=>{
+
+
+if(data.status=="error"){
+
+document.getElementById("content")
+.innerHTML=
+
+"❌ "+data.message;
+
+return;
+
+}
+
+
+showContent(data);
+
+
+})
+
+
+.catch(()=>{
+
+
+document.getElementById("content")
+.innerHTML=
+
+"❌ Gagal mengambil video";
+
+
+});
+
+
+}
+
+
+
+
+
+
+
+
+
+// ==========================================
+// TAMPILKAN FOLDER & VIDEO
+// ==========================================
+
+
+function showContent(data){
+
+
+let box =
+document.getElementById("content");
+
+
+box.innerHTML="";
+
+
+renderItems(
+data,
+box,
+0
+);
+
+
+}
+
+
+
+
+function renderItems(items,container,level){
+
+
+
+items.forEach(item=>{
+
+
+
+// =====================
+// VIDEO
+// =====================
+
+
+if(item.type=="video"){
+
+
+let div =
+document.createElement("div");
+
+
+div.className="item";
+
+
+div.innerHTML=
+
+"🎬 "+item.name;
+
+
+
+div.onclick=function(){
+
+playVideo(item.id);
+
+};
+
+
+
+container.appendChild(div);
+
+
+}
+
+
+
+
+
+// =====================
+// FOLDER
+// =====================
+
+
+if(item.type=="folder"){
+
+
+
+let folderBox =
+document.createElement("div");
+
+
+folderBox.className="card";
+
+
+
+folderBox.style.marginLeft =
+(level*15)+"px";
+
+
+
+let title =
+document.createElement("h3");
+
+
+title.innerHTML=
+
+"📁 "+item.name;
+
+
+
+folderBox.appendChild(title);
+
+
+
+
+
+let childBox =
+document.createElement("div");
+
+
+
+folderBox.appendChild(childBox);
+
+
+
+container.appendChild(folderBox);
+
+
+
+renderItems(
+
+item.children,
+
+childBox,
+
+level+1
+
+);
+
+
+
+}
+
+
+
+});
+
+
+
+}
+
+
+
+
+
+
+
+
+// ==========================================
+// VIDEO PLAYER DRIVE
+// ==========================================
+
+
+function playVideo(id){
+
+
+
+let player =
+document.getElementById("player");
+
+
+
+player.innerHTML=`
+
+<iframe
+
+src="https://drive.google.com/file/d/${id}/preview"
+
+allow="autoplay; fullscreen"
+
+allowfullscreen>
+
+</iframe>
+
+`;
+
+
+
+}
+
+
+
+
+
+
+
+// ==========================================
+// KEMBALI
+// ==========================================
+
+
+function backDashboard(){
+
+
+if(userData.role=="admin"){
+
+showAdmin();
+
+}
+
+else{
+
+showPeserta();
+
+}
+
+
+}
+
+
+
+
+
+
+
+// ==========================================
+// AUTO LOGIN
+// ==========================================
+
+
+
+</script>
+
+
+
+</body>
+
+</html>
+
