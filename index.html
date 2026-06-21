@@ -1,1500 +1,359 @@
 <!DOCTYPE html>
 <html>
-
 <head>
-
 <meta charset="UTF-8">
-
 <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
-
-
-<title>
-Jago Excel by YEC.CO.ID
-</title>
-
-
+<title>Jago Excel by YEC.CO.ID</title>
 
 <style>
-
-
 :root{
-
 --bg:#101010;
 --card:#1d1d1d;
 --text:#ffffff;
 --muted:#aaa;
 --primary:#16a34a;
-
 }
 
-
-
 .light{
-
 --bg:#f4f4f4;
 --card:#ffffff;
 --text:#111;
 --muted:#555;
-
 }
-
-
 
 *{
-
 box-sizing:border-box;
-font-family:
-'Segoe UI',
-Arial,
-sans-serif;
-
+font-family:'Segoe UI', Arial, sans-serif;
 }
-
-
 
 body{
-
 margin:0;
-
 background:var(--bg);
-
 color:var(--text);
-
 transition:.3s;
-
 }
-
-
-
-
 
 header{
-
-
 display:flex;
-
 justify-content:space-between;
-
 align-items:center;
-
 padding:18px 25px;
-
 background:var(--card);
-
 position:sticky;
-
 top:0;
-
 z-index:99;
-
-
 }
 
-
-
-.logo{
-
-font-size:22px;
-
-font-weight:bold;
-
-}
-
-
+.logo{font-size:22px; font-weight:bold;}
 
 .theme{
-
-font-size:16px;
-cursor:pointer;
-display: flex;
-align-items: center;
-gap: 8px;
-background: var(--bg);
-padding: 8px 16px;
-border-radius: 20px;
-border: 1px solid var(--muted);
-transition: 0.3s;
+font-size:16px; cursor:pointer; display: flex; align-items: center;
+gap: 8px; background: var(--bg); padding: 8px 16px;
+border-radius: 20px; border: 1px solid var(--muted); transition: 0.3s;
 user-select: none;
-
 }
+.theme:hover{ opacity: 0.8; }
 
-.theme:hover{
-opacity: 0.8;
-}
-
-
-
-.container{
-
-max-width:1200px;
-
-margin:auto;
-
-padding:20px;
-
-}
-
-
-
+.container{ max-width:1200px; margin:auto; padding:20px; }
 
 .login{
-
-max-width:420px;
-
-margin:80px auto;
-
-background:var(--card);
-
-padding:30px;
-
-border-radius:20px;
-
-box-shadow:
-0 10px 30px #0005;
-
+max-width:420px; margin:80px auto; background:var(--card);
+padding:30px; border-radius:20px; box-shadow:0 10px 30px #0005;
 }
-
-
 
 input{
-
-
-width:100%;
-
-padding:14px;
-
-margin:10px 0;
-
-border-radius:12px;
-
-border:none;
-
-background:#333;
-
-color:white;
-
-font-size:15px;
-
+width:100%; padding:14px; margin:10px 0; border-radius:12px;
+border:none; background:#333; color:white; font-size:15px;
 }
 
-
-.light input{
-
-background:#eee;
-
-color:#111;
-
-}
-
-
-
-
+.light input{ background:#eee; color:#111; }
 
 button{
-
-
-width:100%;
-
-padding:14px;
-
-border:none;
-
-border-radius:12px;
-
-margin-top:10px;
-
-cursor:pointer;
-
-background:var(--primary);
-
-color:white;
-
-font-size:16px;
-
-transition:.2s;
-
-
+width:100%; padding:14px; border:none; border-radius:12px;
+margin-top:10px; cursor:pointer; background:var(--primary);
+color:white; font-size:16px; transition:.2s;
 }
+button:hover{ transform:scale(1.03); }
 
+.card{ background:var(--card); padding:20px; border-radius:18px; margin:15px 0; }
 
-button:hover{
+.grid{ display:grid; grid-template-columns:repeat(auto-fit,minmax(260px,1fr)); gap:20px; }
 
-transform:scale(1.03);
+.batch{ cursor:pointer; transition:.2s; }
+.batch:hover{ transform:translateY(-5px); }
 
-}
+.video-wrapper{ height:calc(100vh - 180px); }
+.video-area{ display:grid; grid-template-columns:2fr 1fr; gap:20px; height:100%; }
 
-
-
-
-
-.card{
-
-
-background:var(--card);
-
-padding:20px;
-
-border-radius:18px;
-
-margin:15px 0;
-
-}
-
-
-
-.grid{
-
-
-display:grid;
-
-grid-template-columns:
-repeat(auto-fit,minmax(260px,1fr));
-
-gap:20px;
-
-
-}
-
-
-
-.batch{
-
-
-cursor:pointer;
-
-transition:.2s;
-
-
-}
-
-
-
-.batch:hover{
-
-transform:translateY(-5px);
-
-}
-
-
-
-
-.video-wrapper{
-
-height:calc(100vh - 180px);
-
-}
-  
-.video-area{
-
-display:grid;
-
-grid-template-columns:2fr 1fr;
-
-gap:20px;
-
-height:100%;
-
-}
-
-
-
-.player{
-
-background:black;
-
-height:100%;
-
-border-radius:20px;
-
-overflow:hidden;
-
-position:sticky;
-
-top:20px;
-
-}
-
+.player{ background:black; height:100%; border-radius:20px; overflow:hidden; position:sticky; top:20px; }
 .player-text{
+position: absolute; top: 50%; left: 50%; transform: translate(-50%, -50%);
+font-size: 24px; color: var(--muted); width: 100%; text-align: center; font-weight: bold; pointer-events: none;
+}
+iframe{ position: absolute; top: 0; left: 0; width:100%; height:100%; border:0; }
 
-position: absolute;
-top: 50%;
-left: 50%;
-transform: translate(-50%, -50%);
-font-size: 24px;
-color: var(--muted);
-width: 100%;
-text-align: center;
-font-weight: bold;
-pointer-events: none;
+.item{ padding:14px; background:var(--card); border-radius:12px; margin:10px 0; cursor:pointer; }
+#content{ height:100%; overflow-y:auto; padding-right:10px; }
+.item:hover{ opacity:.8; }
+.back{ background:#555; }
+.logout{ background:#dc2626; }
+.hidden{ display:none; }
+.loading{ text-align:center; padding:30px; }
+.small{ color:var(--muted); }
 
+.video-note{
+background:var(--card); padding:12px; border-left:4px solid var(--primary);
+border-radius:8px; margin-top:15px; font-size:14px; color:var(--muted);
 }
 
-
-iframe{
-
-position: absolute;
-
-top: 0;
-
-left: 0;
-
-width:100%;
-
-height:100%;
-
-border:0;
-
-}
-
-
-
-
-.item{
-
-padding:14px;
-
-background:var(--card);
-
-border-radius:12px;
-
-margin:10px 0;
-
-cursor:pointer;
-
-}
-
-
-
-#content{
-
-height:100%;
-
-overflow-y:auto;
-
-padding-right:10px;
-
-}
-
-
-
-.item:hover{
-
-opacity:.8;
-
-}
-
-
-
-
-.back{
-
-background:#555;
-
-}
-
-
-
-.logout{
-
-background:#dc2626;
-
-}
-
-
-
-.hidden{
-
-display:none;
-
-}
-
-
-
-
-.loading{
-
-
-text-align:center;
-
-padding:30px;
-
-
-}
-
-
-
-
-.small{
-
-color:var(--muted);
-
-}
-
-
-/* ===========================
-   PENGATURAN TOMBOL KEMBALI
-   =========================== */
 .back-btn{
-
-display:block;
-
-/* Margin untuk Desktop: Rata Kiri */
-margin:20px 0 40px 0;
-
-width:250px;
-
-padding:14px;
-
-border:none;
-
-border-radius:12px;
-
-cursor:pointer;
-
-background:var(--primary);
-
-color:white;
-
-font-size:16px;
-
-font-weight:bold;
-
+display:block; margin:20px 0 40px 0; width:250px; padding:14px;
+border:none; border-radius:12px; cursor:pointer; background:var(--primary);
+color:white; font-size:16px; font-weight:bold;
 }
 
-/* ===========================
-   PENGATURAN KELOLA PESERTA
-   =========================== */
 .search-box {
-  width: 100%;
-  padding: 14px;
-  border-radius: 12px;
-  border: 1px solid var(--muted);
-  background: var(--bg);
-  color: var(--text);
-  margin-bottom: 20px;
-  font-size: 15px;
+width: 100%; padding: 14px; border-radius: 12px; border: 1px solid var(--muted);
+background: var(--bg); color: var(--text); margin-bottom: 20px; font-size: 15px;
 }
-
-.table-wrapper {
-  overflow-x: auto;
-  margin-top: 15px;
-}
-
-table {
-  width: 100%;
-  border-collapse: collapse;
-  min-width: 600px;
-}
-
-th, td {
-  padding: 12px;
-  text-align: left;
-  border-bottom: 1px solid #333;
-}
-
-.light th, .light td {
-  border-bottom: 1px solid #ddd;
-}
-
-th {
-  color: var(--muted);
-  font-weight: normal;
-}
+.table-wrapper { overflow-x: auto; margin-top: 15px; }
+table { width: 100%; border-collapse: collapse; min-width: 600px; }
+th, td { padding: 12px; text-align: left; border-bottom: 1px solid #333; }
+.light th, .light td { border-bottom: 1px solid #ddd; }
+th { color: var(--muted); font-weight: normal; }
 
 .badge {
-  padding: 5px 10px;
-  border-radius: 20px;
-  font-size: 12px;
-  background: #3b82f6;
-  color: white;
-  display: inline-block;
-  margin: 2px;
+padding: 5px 10px; border-radius: 20px; font-size: 12px;
+background: #3b82f6; color: white; display: inline-block; margin: 2px;
 }
+.badge.status-aktif { background: #16a34a; }
+.badge.status-nonaktif { background: #dc2626; }
 
-.badge.status-aktif {
-  background: #16a34a;
+.btn-small { width: auto; padding: 6px 12px; font-size: 12px; margin-top: 0; margin-right: 5px; display: inline-block; }
+.btn-danger { background: #dc2626; }
+.btn-warning { background: #d97706; }
+.btn-secondary { background: #555; }
+.header-peserta { display: flex; justify-content: space-between; align-items: center; flex-wrap: wrap; gap: 10px; }
+
+/* CSS MODAL (POPUP FORM) */
+.modal-overlay {
+  position: fixed; top: 0; left: 0; width: 100%; height: 100%;
+  background: rgba(0,0,0,0.7); z-index: 1000; display: none;
+  justify-content: center; align-items: center; padding: 20px;
 }
-
-.badge.status-nonaktif {
-  background: #dc2626;
+.modal {
+  background: var(--card); width: 100%; max-width: 500px;
+  border-radius: 20px; padding: 25px; box-shadow: 0 10px 40px rgba(0,0,0,0.5);
+  max-height: 90vh; overflow-y: auto;
 }
-
-.btn-small {
-  width: auto;
-  padding: 6px 12px;
-  font-size: 12px;
-  margin-top: 0;
-  margin-right: 5px;
-  display: inline-block;
-}
-
-.btn-danger {
-  background: #dc2626;
-}
-
-.btn-warning {
-  background: #d97706;
-}
-
-.header-peserta {
-  display: flex;
-  justify-content: space-between;
-  align-items: center;
-  flex-wrap: wrap;
-  gap: 10px;
-}
-
+.modal h3 { margin-top: 0; margin-bottom: 20px; }
+.checkbox-group { display: flex; flex-direction: column; gap: 12px; margin: 15px 0; background: var(--bg); padding: 15px; border-radius: 12px; }
+.checkbox-item { display: flex; align-items: center; gap: 10px; cursor: pointer; font-size: 14px; }
+.checkbox-item input { width: 18px; height: 18px; margin: 0; cursor: pointer; }
+.btn-group { display: flex; gap: 10px; margin-top: 20px; }
 
 @media(max-width:800px){
-
-#themeText{
-display:none;
-}
-
-.theme{
-padding:8px 10px;
-}
-
-.video-wrapper{
-height:auto;
-display:block;
-}
-
-/* Mematikan flexbox sepenuhnya untuk menghindari bug area sentuh (hitbox) meleset di HP */
-.video-area{
-display:block;
-}
-
+#themeText{ display:none; }
+.theme{ padding:8px 10px; }
+.video-wrapper{ height:auto; display:block; }
+.video-area{ display:block; }
 .player{
-position:relative !important;
-width:110% !important; /* Diubah menjadi 110% */
-height:380px !important;
-display:block;
-border-radius:12px !important;
-overflow:visible !important;
-margin-bottom:20px;
-z-index: 1;
-
-/* Trik ini otomatis menyesuaikan berapapun lebarnya */
-left: 50% !important;
-transform: translateX(-50%) !important;
+position:relative !important; width:100%; height:300px !important; display:block;
+border-radius:12px !important; overflow:hidden !important; margin-bottom:20px; z-index: 1;
+}
+.player iframe{ position:absolute; top:0; left:0; width:100% !important; height:100% !important; border:none; }
+#content{ height:auto; max-height:450px; overflow-y:auto; -webkit-overflow-scrolling:touch; }
+.back-btn{ margin:20px auto 40px auto; }
+.video-note{ font-size:12px; padding:10px; }
 }
 
-
-.player iframe{
-position:absolute;
-top:0;
-left:0;
-width:100% !important;
-height:100% !important;
-border:none;
-}
-
-#content{
-height:auto;
-max-height:450px;
-overflow-y:auto;
--webkit-overflow-scrolling:touch;
-}
-
-/* Pengaturan khusus tombol kembali di HP agar tetap di tengah */
-.back-btn{
-margin:20px auto 40px auto;
-}
-
-}
-
-
-
-#password {
-  transition: opacity 0.15s ease;
-}
-
-.video-tip{
-  margin-top: 12px;
-  padding: 10px 14px;
-  font-size: 13px;
-  color: var(--muted);
-  background: rgba(255,255,255,0.05);
-  border-radius: 10px;
-
-  display: flex;
-  justify-content: space-between;
-  align-items: center;
-  gap: 10px;
-
-  line-height: 1.4;
-  max-width: 100%;
-  word-wrap: break-word;
-}
-
-.tip-close{
-  cursor: pointer;
-  font-weight: bold;
-  opacity: 0.6;
-  transition: 0.2s;
-}
-
-.tip-close:hover{
-  opacity: 1;
-  transform: scale(1.2);
-}
-
-@media(max-width:600px){
-  .video-tip{
-    flex-direction: column;
-    align-items: flex-start;
-    gap: 8px;
-  }
-
-  .tip-close{
-    align-self: flex-end;
-  }
-}
-  
+#password { transition: opacity 0.15s ease; }
 </style>
-
-
 </head>
-
-
 <body>
 
-
 <header>
-
-
-<div class="logo">
-
-📗 Jago Excel by YEC.CO.ID
-
-</div>
-
-
-<div 
-class="theme"
-onclick="toggleTheme()">
-
+<div class="logo">📗 Jago Excel by YEC.CO.ID</div>
+<div class="theme" onclick="toggleTheme()">
 <span id="themeIcon">🌙</span>
 <span id="themeText">Dark Mode</span>
-
 </div>
-
-
 </header>
-
-
 
 <div id="app"></div>
 
-
-
 <script>
-
-
-const API_URL =
-"https://script.google.com/macros/s/AKfycbwXq6BJqFM4ThQLmMiHJzp4NPs9JPS_hnCicX0CjSycuMuRBp6OATnp--aS7vGhxnuS/exec";
-
-
-// ==========================================
-// START APP
-// ==========================================
-
+const API_URL = "https://script.google.com/macros/s/AKfycbwXq6BJqFM4ThQLmMiHJzp4NPs9JPS_hnCicX0CjSycuMuRBp6OATnp--aS7vGhxnuS/exec";
 
 let userData = null;
-
-// Hapus Data Dummy, kita pakai data asli dari server
 let semuaPeserta = [];
-
+let dataPengaturan = null;
 
 window.onload=function(){
-
-loadTheme();
-
-
-let session =
-localStorage.getItem("user");
-
-
-if(session){
-
-  // Sistem Pembersih (Anti-Blank Screen)
-  try {
-    userData = JSON.parse(session);
-
-    if(userData && userData.role == "admin"){
-      showAdmin();
-    }
-    else if(userData && userData.role == "peserta"){
-      showPeserta();
-    }
-    else {
+  loadTheme();
+  let session = localStorage.getItem("user");
+  if(session){
+    try {
+      userData = JSON.parse(session);
+      if(userData && userData.role == "admin"){ showAdmin(); }
+      else if(userData && userData.role == "peserta"){ showPeserta(); }
+      else { logout(); }
+    } catch(e) {
       logout();
     }
-  } catch(e) {
-    // Jika data memori rusak/nyangkut, bersihkan dan suruh login ulang
-    logout();
+  } else {
+    showLogin();
   }
-
-}
-else{
-
-
-showLogin();
-
-
-}
-
-
 };
 
-
-
-
-
-// ==========================================
-// THEME
-// ==========================================
-
 function toggleTheme(){
-
-
-document.body.classList.toggle("light");
-
-
-let mode =
-document.body.classList.contains("light")
-?
-"light"
-:
-"dark";
-
-
-localStorage.setItem(
-"theme",
-mode
-);
-
-updateThemeUI();
-
+  document.body.classList.toggle("light");
+  let mode = document.body.classList.contains("light") ? "light" : "dark";
+  localStorage.setItem("theme", mode);
+  updateThemeUI();
 }
-
-
 
 function loadTheme(){
-
-
-let theme =
-localStorage.getItem("theme");
-
-
-if(theme=="light"){
-
-document.body.classList.add("light");
-
+  let theme = localStorage.getItem("theme");
+  if(theme=="light"){ document.body.classList.add("light"); }
+  updateThemeUI();
 }
-
-updateThemeUI();
-
-}
-
 
 function updateThemeUI() {
   let isLight = document.body.classList.contains("light");
   let icon = document.getElementById("themeIcon");
   let text = document.getElementById("themeText");
-  
   if(icon && text) {
     icon.innerHTML = isLight ? "☀️" : "🌙";
     text.innerHTML = isLight ? "Light Mode" : "Dark Mode";
   }
 }
 
-
-
-
-
-
-
-// ==========================================
-// LOGIN PAGE
-// ==========================================
-
-
 function showLogin(){
-
-
-document.getElementById("app").innerHTML=`
-
-<div class="container">
-
-
-<div class="login">
-
-
-<h2>
-📗 Jago Excel by YEC.CO.ID
-</h2>
-
-
-<p class="small">
-Masukkan data login
-</p>
-
-
-
-<input 
-id="username"
-placeholder="Nama Lengkap / Username Admin"
->
-
-
-
-<div style="position:relative;">
-
-  <input 
-    id="password"
-    type="password"
-    placeholder="Kode Batch / Password"
-  >
-
-  <span
-    id="eyeIcon"
-    onclick="togglePassword()" 
-    style="
-      position:absolute;
-      right:12px;
-      top:50%;
-      transform:translateY(-50%);
-      cursor:pointer;
-      color:#aaa;
-      font-size:14px;
-      user-select:none;
-    ">
-    👁
-  </span>
-
-</div>
-
-
-
-<button onclick="login()">
-
-🚀 MASUK
-
-</button>
-
-
-
-<div id="message"></div>
-
-
-</div>
-
-
-</div>
-
-`;
-
-
-
+  document.getElementById("app").innerHTML=`
+  <div class="container">
+    <div class="login">
+      <h2>📗 Jago Excel by YEC.CO.ID</h2>
+      <p class="small">Masukkan data login</p>
+      <input id="username" placeholder="Nama Lengkap / Username Admin">
+      <div style="position:relative;">
+        <input id="password" type="password" placeholder="Kode Batch / Password">
+        <span id="eyeIcon" onclick="togglePassword()" style="position:absolute; right:12px; top:50%; transform:translateY(-50%); cursor:pointer; color:#aaa; font-size:14px; user-select:none;">👁</span>
+      </div>
+      <button onclick="login()">🚀 MASUK</button>
+      <div id="message"></div>
+    </div>
+  </div>`;
 }
-
-
-
-
-
-
-
-// ==========================================
-// PROSES LOGIN
-// ==========================================
-
 
 function login(){
-
-
-let username =
-document.getElementById("username")
-.value;
-
-
-let password =
-document.getElementById("password")
-.value;
-
-
-
-if(
-username=="" ||
-password==""
-){
-
-
-showMessage(
-"Data belum lengkap"
-);
-
-
-return;
-
+  let username = document.getElementById("username").value;
+  let password = document.getElementById("password").value;
+  if(username=="" || password==""){ showMessage("Data belum lengkap"); return; }
+  
+  showMessage("⏳ Memeriksa data...");
+  fetch(API_URL+"?action=loginPeserta&nama="+encodeURIComponent(username)+"&kode="+encodeURIComponent(password))
+  .then(r=>r.json())
+  .then(data=>{
+    if(data.status=="success"){
+      userData=data; saveSession(); showPeserta();
+    } else {
+      loginAdmin(username,password);
+    }
+  }).catch(err=>{ showMessage("Server error"); });
 }
-
-
-
-showMessage(
-"⏳ Memeriksa data..."
-);
-
-
-
-
-
-// coba peserta dulu
-
-
-fetch(
-
-API_URL+
-
-"?action=loginPeserta"+
-
-"&nama="+
-
-encodeURIComponent(username)+
-
-"&kode="+
-
-encodeURIComponent(password)
-
-)
-
-
-.then(r=>r.json())
-
-
-.then(data=>{
-
-
-if(data.status=="success"){
-
-
-userData=data;
-
-
-saveSession();
-
-
-showPeserta();
-
-
-}
-
-else{
-
-
-// coba admin
-
-
-loginAdmin(
-username,
-password
-);
-
-
-}
-
-
-
-})
-
-.catch(err=>{
-
-
-showMessage(
-"Server error"
-);
-
-
-});
-
-
-
-}
-
-
-
-
-
-
-
-// ==========================================
-// LOGIN ADMIN
-// ==========================================
-
 
 function loginAdmin(username,password){
-
-
-fetch(
-
-API_URL+
-
-"?action=loginAdmin"+
-
-"&username="+
-encodeURIComponent(username)+
-
-"&password="+
-encodeURIComponent(password)
-
-)
-
-
-.then(r=>r.json())
-
-
-.then(data=>{
-
-
-if(data.status=="success"){
-
-
-userData=data;
-
-
-saveSession();
-
-
-showAdmin();
-
-
+  fetch(API_URL+"?action=loginAdmin&username="+encodeURIComponent(username)+"&password="+encodeURIComponent(password))
+  .then(r=>r.json())
+  .then(data=>{
+    if(data.status=="success"){
+      // Simpan username juga agar bisa dipakai ganti password
+      data.username = username;
+      userData=data; saveSession(); showAdmin();
+    } else{ showMessage("Nama/Kode tidak ditemukan"); }
+  });
 }
-
-
-else{
-
-
-showMessage(
-"Nama/Kode tidak ditemukan"
-);
-
-
-}
-
-
-
-});
-
-
-}
-
-
-
-
 
 function showMessage(text){
-
-let msg =
-document.getElementById("message");
-
-
-if(msg){
-
-msg.innerHTML=
-`
-<p class="small">
-${text}
-</p>
-`;
-
+  let msg = document.getElementById("message");
+  if(msg){ msg.innerHTML=`<p class="small">${text}</p>`; }
 }
 
+function saveSession(){ localStorage.setItem("user", JSON.stringify(userData)); }
+function logout(){ localStorage.removeItem("user"); userData=null; showLogin(); }
+
+function togglePassword(){
+  let input = document.getElementById("password");
+  let icon = document.getElementById("eyeIcon");
+  if(!input || !icon) return;
+  input.style.opacity = "0.3";
+  setTimeout(() => {
+    if(input.type === "password"){ input.type = "text"; icon.innerHTML = "🙈"; } 
+    else { input.type = "password"; icon.innerHTML = "👁"; }
+    input.style.opacity = "1";
+  }, 150);
 }
-
-// ==========================================
-// SESSION
-// ==========================================
-
-
-function saveSession(){
-
-
-localStorage.setItem(
-
-"user",
-
-JSON.stringify(userData)
-
-);
-
-
-}
-
-
-
-function checkSession(){
-
-
-let data =
-localStorage.getItem("user");
-
-
-if(data){
-
-
-userData =
-JSON.parse(data);
-
-
-
-if(userData.role=="admin"){
-
-showAdmin();
-
-}
-else{
-
-showPeserta();
-
-}
-
-
-}
-
-}
-
-
-
-
-
-
-
-function logout(){
-
-
-localStorage.removeItem("user");
-
-
-userData=null;
-
-
-showLogin();
-
-
-}
-
-
-
-
-
-
-
-
-// ==========================================
-// PESERTA DASHBOARD
-// ==========================================
-
 
 function showPeserta(){
-
-
-let html=`
-
-
-<div class="container">
-
-
-<h2>
-Halo 👋 ${userData.nama}
-</h2>
-
-
-<p class="small">
-Selamat belajar di Jago Excel by YEC.CO.ID
-</p>
-
-
-
-<h3>
-📚 Kelas Kamu
-</h3>
-
-
-
-<div class="grid">
-
-
-`;
-
-
-
-
-
-userData.batch.forEach(batch=>{
-
-
-html+=`
-
-<div class="card batch"
-onclick="openClass('${batch.folder}','${batch.name}','${batch.code}')">
-
-
-<h3>
-
-📗 ${batch.name}
-
-</h3>
-
-
-<p>
-
-Kode:
-${batch.code}
-
-</p>
-
-
-<button>
-
-▶ Masuk Kelas
-
-</button>
-
-
-</div>
-
-
-`;
-
-
-
-});
-
-
-
-
-
-html+=`
-
-</div>
-
-
-<button class="logout"
-onclick="logout()">
-
-🚪 Logout
-
-</button>
-
-
-</div>
-
-
-`;
-
-
-
-document.getElementById("app")
-.innerHTML=html;
-
-
+  let html=`<div class="container">
+  <h2>Halo 👋 ${userData.nama}</h2>
+  <p class="small">Selamat belajar di Jago Excel by YEC.CO.ID</p>
+  <h3>📚 Kelas Kamu</h3>
+  <div class="grid">`;
+  userData.batch.forEach(batch=>{
+    html+=`<div class="card batch" onclick="openClass('${batch.folder}','${batch.name}','${batch.code}')">
+    <h3>📗 ${batch.name}</h3><p>Kode: ${batch.code}</p><button>▶ Masuk Kelas</button></div>`;
+  });
+  html+=`</div><button class="logout" onclick="logout()">🚪 Logout</button></div>`;
+  document.getElementById("app").innerHTML=html;
 }
-
-
-
-
-
-
-
-
-
-// ==========================================
-// ADMIN DASHBOARD
-// ==========================================
-
 
 function showAdmin(){
-
-
-let html=`
-
-
-<div class="container">
-
-
-<h2>
-👑 Admin Panel
-</h2>
-
-
-<p>
-📗 Jago Excel by YEC.CO.ID
-</p>
-
-
-
-<div class="card">
-
-
-<h3>
-Menu Admin
-</h3>
-
-
-<button onclick="showAllBatch()">
-
-📚 Lihat Semua Kelas
-
-</button>
-
-
-
-<button onclick="showKelolaPeserta()">
-
-👥 Kelola Peserta
-
-</button>
-
-
-
-<button>
-
-⚙️ Pengaturan
-
-</button>
-
-
-
-</div>
-
-
-
-
-<div id="adminContent"></div>
-
-
-
-
-<button class="logout"
-onclick="logout()">
-
-🚪 Logout
-
-</button>
-
-
-
-</div>
-
-
-`;
-
-
-
-document.getElementById("app")
-.innerHTML=html;
-
-
-showAllBatch();
-
-
+  let html=`<div class="container">
+  <h2>👑 Admin Panel</h2><p>📗 Jago Excel by YEC.CO.ID</p>
+  <div class="card">
+  <h3>Menu Admin</h3>
+  <button onclick="showAllBatch()">📚 Lihat Semua Kelas</button>
+  <button onclick="showKelolaPeserta()">👥 Kelola Peserta</button>
+  <button onclick="showPengaturan()">⚙️ Pengaturan</button>
+  </div>
+  <div id="adminContent"></div>
+  <button class="logout" onclick="logout()">🚪 Logout</button></div>`;
+  document.getElementById("app").innerHTML=html;
+  showAllBatch();
 }
-
-
-
-
-
-
-
 
 function showAllBatch(){
-
-
-let box =
-document.getElementById(
-"adminContent"
-);
-
-
-
-let html=`
-
-
-<h3>
-Semua Batch
-</h3>
-
-
-<div class="grid">
-
-`;
-
-
-
-userData.batch.forEach(batch=>{
-
-
-html+=`
-
-<div class="card batch"
-onclick="openClass('${batch.folder}','${batch.name}','${batch.code}')">
-
-
-<h3>
-📚 ${batch.name}
-</h3>
-
-
-<p>
-${batch.code}
-</p>
-
-
-<button>
-▶ Buka
-</button>
-
-
-</div>
-
-
-`;
-
-
-});
-
-
-
-html+=`
-
-</div>
-
-`;
-
-
-
-box.innerHTML=html;
-
-
+  let box = document.getElementById("adminContent");
+  let html=`<h3>Semua Batch Aktif</h3><div class="grid">`;
+  userData.batch.forEach(batch=>{
+    html+=`<div class="card batch" onclick="openClass('${batch.folder}','${batch.name}','${batch.code}')">
+    <h3>📚 ${batch.name}</h3><p>${batch.code}</p><button>▶ Buka</button></div>`;
+  });
+  html+=`</div>`;
+  box.innerHTML=html;
 }
 
-// ==========================================
-// KELOLA PESERTA (LIVE API)
-// ==========================================
-
+/* =========================================================
+   FUNGSI KELOLA PESERTA
+   ========================================================= */
 function showKelolaPeserta(){
-
   let box = document.getElementById("adminContent");
+  
+  let classCheckboxes = userData.batch.map(b => `
+    <label class="checkbox-item">
+      <input type="checkbox" name="batchOptions" value="${b.code}">
+      ${b.name} <span class="small">(Kode: ${b.code})</span>
+    </label>
+  `).join("");
 
   let html = `
     <div class="header-peserta">
       <h3>👥 Kelola Peserta</h3>
-      <button class="btn-small" style="background:var(--primary);">+ Tambah Peserta</button>
+      <button class="btn-small" style="background:var(--primary);" onclick="bukaModalTambah()">+ Tambah Peserta</button>
     </div>
-
-    <input type="text" id="searchPeserta" class="search-box" placeholder="🔍 Cari nama peserta atau kelas..." onkeyup="filterPeserta()">
-
+    <input type="text" id="searchPeserta" class="search-box" placeholder="🔍 Cari nama peserta atau kode kelas..." onkeyup="filterPeserta()">
     <div class="card">
       <div class="table-wrapper">
         <table id="tabelPeserta">
@@ -1508,16 +367,65 @@ function showKelolaPeserta(){
             </tr>
           </thead>
           <tbody id="bodyPeserta">
-            <tr><td colspan="5" style="text-align:center; padding: 30px;">⏳ Memuat data dari Google Sheet...</td></tr>
+            <tr><td colspan="5" style="text-align:center; padding: 30px;">⏳ Memuat data...</td></tr>
           </tbody>
         </table>
       </div>
     </div>
-  `;
 
+    <!-- MODAL TAMBAH PESERTA -->
+    <div class="modal-overlay" id="modalTambah">
+      <div class="modal">
+        <h3>+ Tambah Peserta Baru</h3>
+        <input type="text" id="addNama" placeholder="Nama Lengkap" required>
+        <input type="email" id="addEmail" placeholder="Email (Opsional)">
+        <input type="text" id="addHp" placeholder="No HP/WhatsApp (Opsional)">
+        <p class="small" style="margin-top:15px; margin-bottom:5px;">Pilih Akses Kelas:</p>
+        <div class="checkbox-group" id="tambahBatchContainer">
+           ${classCheckboxes}
+        </div>
+        <div class="btn-group">
+          <button class="btn-secondary" onclick="tutupModal()">Batal</button>
+          <button id="btnSubmitTambah" onclick="submitTambahPeserta()">💾 Simpan Peserta</button>
+        </div>
+      </div>
+    </div>
+
+    <!-- MODAL EDIT KELAS -->
+    <div class="modal-overlay" id="modalEdit">
+      <div class="modal">
+        <h3>📦 Edit Akses Kelas</h3>
+        <p id="editNamaPeserta" style="font-weight:bold; margin-bottom:15px;"></p>
+        <input type="hidden" id="editIdPeserta">
+        <div class="checkbox-group" id="editBatchContainer">
+           ${classCheckboxes}
+        </div>
+        <div class="btn-group">
+          <button class="btn-secondary" onclick="tutupModal()">Batal</button>
+          <button id="btnSubmitEdit" onclick="submitEditPeserta()">💾 Update Kelas</button>
+        </div>
+      </div>
+    </div>
+
+    <!-- MODAL EDIT DATA PESERTA -->
+    <div class="modal-overlay" id="modalEditData">
+      <div class="modal">
+        <h3>📝 Edit Data Diri</h3>
+        <input type="hidden" id="editDataId">
+        <label class="small">Nama Lengkap</label>
+        <input type="text" id="editDataNama" required>
+        <label class="small">Email</label>
+        <input type="email" id="editDataEmail">
+        <label class="small">No HP/WhatsApp</label>
+        <input type="text" id="editDataHp">
+        <div class="btn-group">
+          <button class="btn-secondary" onclick="tutupModal()">Batal</button>
+          <button id="btnSubmitEditData" onclick="submitEditDataPeserta()">💾 Update Data</button>
+        </div>
+      </div>
+    </div>
+  `;
   box.innerHTML = html;
-  
-  // Ambil data asli dari Google Script
   fetchDataPeserta();
 }
 
@@ -1525,522 +433,350 @@ function fetchDataPeserta() {
   fetch(API_URL + "?action=getAllPeserta")
     .then(r => r.json())
     .then(res => {
-      if(res.status === "success") {
-        semuaPeserta = res.data;
-        renderTabelPeserta(semuaPeserta);
-      } else {
-        document.getElementById("bodyPeserta").innerHTML = `<tr><td colspan="5" style="text-align:center; color:red;">❌ Gagal memuat data: ${res.message}</td></tr>`;
-      }
+      if(res.status === "success") { semuaPeserta = res.data; renderTabelPeserta(semuaPeserta); } 
+      else { document.getElementById("bodyPeserta").innerHTML = `<tr><td colspan="5" style="text-align:center; color:red;">❌ Gagal memuat data</td></tr>`; }
     })
-    .catch(err => {
-      document.getElementById("bodyPeserta").innerHTML = `<tr><td colspan="5" style="text-align:center; color:red;">❌ Error jaringan. Pastikan Apps Script sudah di-deploy dengan opsi 'Anyone'.</td></tr>`;
-    });
+    .catch(err => { document.getElementById("bodyPeserta").innerHTML = `<tr><td colspan="5" style="text-align:center; color:red;">❌ Error jaringan.</td></tr>`; });
 }
-
 
 function renderTabelPeserta(data) {
   let tbody = document.getElementById("bodyPeserta");
   let html = "";
-
-  if(data.length === 0){
-    html = `<tr><td colspan="5" style="text-align:center; padding: 20px;">Peserta tidak ditemukan</td></tr>`;
-  }
+  if(data.length === 0){ html = `<tr><td colspan="5" style="text-align:center; padding: 20px;">Peserta tidak ditemukan</td></tr>`; }
 
   data.forEach(p => {
-    
     let batchBadges = p.batch.length > 0 
       ? p.batch.map(b => `<div style="margin-bottom:4px;"><span class="badge">${b.nama}</span> <span class="badge" style="background:#4b5563;">🔑 ${b.kode}</span></div>`).join("") 
       : `<span class="small">- Belum ada akses -</span>`;
+    let statusBadge = p.status === "AKTIF" ? `<span class="badge status-aktif" id="badge-${p.id}">AKTIF</span>` : `<span class="badge status-nonaktif" id="badge-${p.id}">NONAKTIF</span>`;
+    let actionBtn = p.status === "AKTIF" ? `<button class="btn-small btn-danger" id="btn-${p.id}" onclick="toggleStatus('${p.id}')">❌ Disable</button>` : `<button class="btn-small" id="btn-${p.id}" onclick="toggleStatus('${p.id}')">✅ Enable</button>`;
+    let ownedCodes = p.batch.map(b => b.kode).join(",");
 
-    let statusBadge = p.status === "AKTIF" 
-      ? `<span class="badge status-aktif" id="badge-${p.id}">AKTIF</span>` 
-      : `<span class="badge status-nonaktif" id="badge-${p.id}">NONAKTIF</span>`;
-
-    let actionBtn = p.status === "AKTIF"
-      ? `<button class="btn-small btn-danger" id="btn-${p.id}" onclick="toggleStatus('${p.id}')">❌ Disable</button>`
-      : `<button class="btn-small" id="btn-${p.id}" onclick="toggleStatus('${p.id}')">✅ Enable</button>`;
-
-    html += `
-      <tr>
-        <td>
-          <strong>${p.nama}</strong><br>
-          <span class="small">${p.id}</span><br>
-          <span class="small" style="color:var(--primary);">📧 ${p.email}</span><br>
-          <span class="small" style="color:var(--muted);">📱 ${p.hp}</span>
-        </td>
-        <td>${batchBadges}</td>
-        <td><span class="small">${p.loginTerakhir}</span></td>
-        <td>${statusBadge}</td>
-        <td>
-          ${actionBtn}
-          <button class="btn-small btn-warning">📦 Edit Kelas</button>
-        </td>
-      </tr>
-    `;
+    html += `<tr>
+        <td><strong>${p.nama}</strong><br><span class="small">${p.id}</span><br><span class="small" style="color:var(--primary);">📧 ${p.email}</span><br><span class="small" style="color:var(--muted);">📱 ${p.hp}</span></td>
+        <td>${batchBadges}</td><td><span class="small">${p.loginTerakhir}</span></td><td>${statusBadge}</td>
+        <td>${actionBtn}<button class="btn-small btn-warning" onclick="bukaModalEdit('${p.id}', '${p.nama}', '${ownedCodes}')">📦 Edit Kelas</button>
+        <button class="btn-small" style="background:#3b82f6;" onclick="bukaModalEditData('${p.id}', '${p.nama}', '${p.email}', '${p.hp}')">📝 Edit Data</button></td>
+      </tr>`;
   });
-
   tbody.innerHTML = html;
 }
 
-
 function filterPeserta() {
   let keyword = document.getElementById("searchPeserta").value.toLowerCase();
-  
-  let filtered = semuaPeserta.filter(p => {
-    let matchName = p.nama.toLowerCase().includes(keyword);
-    let matchBatch = p.batch.some(b => b.toLowerCase().includes(keyword));
-    return matchName || matchBatch;
-  });
-
+  let filtered = semuaPeserta.filter(p => p.nama.toLowerCase().includes(keyword) || p.batch.some(b => b.kode.toLowerCase().includes(keyword) || b.nama.toLowerCase().includes(keyword)));
   renderTabelPeserta(filtered);
 }
 
-// ==========================================
-// MENGUBAH STATUS PESERTA (LIVE API)
-// ==========================================
+function tutupModal() {
+  document.querySelectorAll('.modal-overlay').forEach(m => m.style.display = 'none');
+}
+
+function bukaModalTambah() {
+  document.getElementById('addNama').value = ''; document.getElementById('addEmail').value = ''; document.getElementById('addHp').value = '';
+  document.querySelectorAll('#tambahBatchContainer input[type="checkbox"]').forEach(cb => cb.checked = false);
+  document.getElementById('modalTambah').style.display = 'flex';
+}
+
+function bukaModalEdit(id, nama, ownedCodesStr) {
+  document.getElementById('editIdPeserta').value = id; document.getElementById('editNamaPeserta').innerHTML = "Nama: " + nama;
+  let ownedCodes = ownedCodesStr.split(',');
+  document.querySelectorAll('#editBatchContainer input[type="checkbox"]').forEach(cb => cb.checked = ownedCodes.includes(cb.value));
+  document.getElementById('modalEdit').style.display = 'flex';
+}
+
+function bukaModalEditData(id, nama, email, hp) {
+  document.getElementById('editDataId').value = id; document.getElementById('editDataNama').value = nama;
+  document.getElementById('editDataEmail').value = email === "-" ? "" : email; document.getElementById('editDataHp').value = hp === "-" ? "" : hp;
+  document.getElementById('modalEditData').style.display = 'flex';
+}
+
+function submitTambahPeserta() {
+  let nama = document.getElementById('addNama').value, email = document.getElementById('addEmail').value, hp = document.getElementById('addHp').value;
+  let selectedBatches = Array.from(document.querySelectorAll('#tambahBatchContainer input:checked')).map(cb => cb.value).join(',');
+  if(nama.trim() === "") { alert("Nama lengkap wajib diisi!"); return; }
+  let btn = document.getElementById('btnSubmitTambah'); btn.innerHTML = "⏳ Menyimpan..."; btn.disabled = true;
+
+  fetch(API_URL + "?action=addPeserta&nama=" + encodeURIComponent(nama) + "&email=" + encodeURIComponent(email) + "&hp=" + encodeURIComponent(hp) + "&batches=" + encodeURIComponent(selectedBatches))
+  .then(r => r.json()).then(res => {
+     btn.innerHTML = "💾 Simpan Peserta"; btn.disabled = false;
+     if(res.status === "success") { tutupModal(); fetchDataPeserta(); } else { alert("Gagal: " + res.message); }
+  }).catch(err => { btn.innerHTML = "💾 Simpan Peserta"; btn.disabled = false; alert("Error jaringan."); });
+}
+
+function submitEditPeserta() {
+  let id = document.getElementById('editIdPeserta').value, selectedBatches = Array.from(document.querySelectorAll('#editBatchContainer input:checked')).map(cb => cb.value).join(',');
+  let btn = document.getElementById('btnSubmitEdit'); btn.innerHTML = "⏳ Mengupdate..."; btn.disabled = true;
+
+  fetch(API_URL + "?action=editPesertaBatch&id=" + encodeURIComponent(id) + "&batches=" + encodeURIComponent(selectedBatches))
+  .then(r => r.json()).then(res => {
+     btn.innerHTML = "💾 Update Kelas"; btn.disabled = false;
+     if(res.status === "success") { tutupModal(); fetchDataPeserta(); } else { alert("Gagal: " + res.message); }
+  }).catch(err => { btn.innerHTML = "💾 Update Kelas"; btn.disabled = false; alert("Error jaringan."); });
+}
+
+function submitEditDataPeserta() {
+  let id = document.getElementById('editDataId').value, nama = document.getElementById('editDataNama').value, email = document.getElementById('editDataEmail').value, hp = document.getElementById('editDataHp').value;
+  if(nama.trim() === "") { alert("Nama lengkap wajib diisi!"); return; }
+  let btn = document.getElementById('btnSubmitEditData'); btn.innerHTML = "⏳ Mengupdate..."; btn.disabled = true;
+
+  fetch(API_URL + "?action=editDataPeserta&id=" + encodeURIComponent(id) + "&nama=" + encodeURIComponent(nama) + "&email=" + encodeURIComponent(email) + "&hp=" + encodeURIComponent(hp))
+  .then(r => r.json()).then(res => {
+     btn.innerHTML = "💾 Update Data"; btn.disabled = false;
+     if(res.status === "success") { tutupModal(); fetchDataPeserta(); } else { alert("Gagal: " + res.message); }
+  }).catch(err => { btn.innerHTML = "💾 Update Data"; btn.disabled = false; alert("Error jaringan."); });
+}
+
 function toggleStatus(id) {
-  let btn = document.getElementById("btn-" + id);
-  let oldText = btn.innerHTML;
-  btn.innerHTML = "⏳ Wait...";
-  btn.disabled = true;
-
-  fetch(API_URL + "?action=toggleStatusPeserta&id=" + encodeURIComponent(id))
-    .then(r => r.json())
+  let btn = document.getElementById("btn-" + id); let oldText = btn.innerHTML; btn.innerHTML = "⏳ Wait..."; btn.disabled = true;
+  fetch(API_URL + "?action=toggleStatusPeserta&id=" + encodeURIComponent(id)).then(r => r.json())
     .then(res => {
+      if(res.status === "success") { let index = semuaPeserta.findIndex(p => p.id === id); if(index !== -1){ semuaPeserta[index].status = res.newStatus; } filterPeserta(); } 
+      else { alert("Gagal mengubah status: " + res.message); btn.innerHTML = oldText; btn.disabled = false; }
+    }).catch(err => { alert("Terjadi kesalahan jaringan"); btn.innerHTML = oldText; btn.disabled = false; });
+}
+
+
+/* =========================================================
+   FUNGSI PENGATURAN (MANAJEMEN BATCH & LOG)
+   ========================================================= */
+function showPengaturan() {
+  let box = document.getElementById("adminContent");
+  let html = `
+    <div class="header-peserta"><h3>⚙️ Pengaturan Sistem</h3></div>
+
+    <!-- KARTU 1: MANAJEMEN BATCH -->
+    <div class="card">
+      <div style="display:flex; justify-content:space-between; align-items:center; flex-wrap:wrap; gap:10px;">
+         <h4 style="margin:0;">📚 Manajemen Kelas / Batch</h4>
+         <button class="btn-small" style="background:var(--primary);" onclick="bukaModalTambahBatch()">+ Tambah Kelas Baru</button>
+      </div>
+      <div class="table-wrapper">
+        <table id="tabelBatch">
+          <thead>
+            <tr>
+              <th>Nama Kelas</th>
+              <th>Kode Akses</th>
+              <th>Folder Drive</th>
+              <th>Status</th>
+              <th>Aksi</th>
+            </tr>
+          </thead>
+          <tbody id="bodyBatch">
+            <tr><td colspan="5" style="text-align:center;">⏳ Memuat data...</td></tr>
+          </tbody>
+        </table>
+      </div>
+    </div>
+
+    <!-- KARTU 2: GANTI PASSWORD -->
+    <div class="card">
+      <h4>🔐 Ganti Password Admin</h4>
+      <input type="password" id="newAdminPass" placeholder="Masukkan Password Baru Anda">
+      <button style="width:auto; padding:10px 25px;" id="btnGantiPass" onclick="submitGantiPassword()">💾 Simpan Password</button>
+    </div>
+
+    <!-- KARTU 3: LOG AKTIVITAS -->
+    <div class="card">
+      <h4>📜 Riwayat Aktivitas (50 Terakhir)</h4>
+      <div class="table-wrapper" style="max-height: 400px; overflow-y: auto;">
+        <table>
+          <thead>
+            <tr><th>Waktu</th><th>ID</th><th>Nama</th><th>Aktivitas</th></tr>
+          </thead>
+          <tbody id="bodyLogs">
+            <tr><td colspan="4" style="text-align:center;">⏳ Memuat log...</td></tr>
+          </tbody>
+        </table>
+      </div>
+    </div>
+
+    <!-- MODAL TAMBAH BATCH -->
+    <div class="modal-overlay" id="modalTambahBatch">
+      <div class="modal">
+        <h3>+ Tambah Kelas Baru</h3>
+        <label class="small">Nama Kelas</label><input type="text" id="addBatchNama" placeholder="Misal: Jago Excel Reguler" required>
+        <label class="small">Kode Akses/Password</label><input type="text" id="addBatchKode" placeholder="Misal: jexcel01" required>
+        <label class="small">ID Folder Google Drive</label><input type="text" id="addBatchFolder" placeholder="ID dari link Google Drive" required>
+        <div class="btn-group">
+          <button class="btn-secondary" onclick="tutupModal()">Batal</button>
+          <button id="btnSubmitTambahBatch" onclick="submitTambahBatch()">💾 Simpan Kelas</button>
+        </div>
+      </div>
+    </div>
+
+    <!-- MODAL EDIT BATCH -->
+    <div class="modal-overlay" id="modalEditBatch">
+      <div class="modal">
+        <h3>📦 Edit Data Kelas</h3>
+        <input type="hidden" id="editBatchId">
+        <label class="small">Nama Kelas</label><input type="text" id="editBatchNama" required>
+        <label class="small">Kode Akses/Password</label><input type="text" id="editBatchKode" required>
+        <label class="small">ID Folder Google Drive</label><input type="text" id="editBatchFolder" required>
+        <div class="btn-group">
+          <button class="btn-secondary" onclick="tutupModal()">Batal</button>
+          <button id="btnSubmitEditBatch" onclick="submitEditBatch()">💾 Update Kelas</button>
+        </div>
+      </div>
+    </div>
+  `;
+  box.innerHTML = html;
+  fetchDataPengaturan();
+}
+
+function fetchDataPengaturan() {
+  fetch(API_URL + "?action=getAdminSettingsData")
+    .then(r => r.json()).then(res => {
       if(res.status === "success") {
-         // Update data lokal
-         let index = semuaPeserta.findIndex(p => p.id === id);
-         if(index !== -1){
-            semuaPeserta[index].status = res.newStatus;
-         }
-         // Render ulang filter
-         filterPeserta();
-      } else {
-         alert("Gagal mengubah status: " + res.message);
-         btn.innerHTML = oldText;
-         btn.disabled = false;
-      }
-    })
-    .catch(err => {
-      alert("Terjadi kesalahan jaringan");
-      btn.innerHTML = oldText;
-      btn.disabled = false;
-    });
+        dataPengaturan = res;
+        renderTabelBatch(res.batches);
+        renderTabelLogs(res.logs);
+      } else { alert("Gagal memuat pengaturan"); }
+    }).catch(err => console.log(err));
 }
 
-// ==========================================
-// OPEN CLASS
-// ==========================================
-
-
-function openClass(folder,name,code){
-
-
-document.getElementById("app").innerHTML=`
-
-<div class="container">
-
-<h2>
-
-📚 ${name}
-
-</h2>
-
-<div class="video-wrapper">
-
-
-<div class="video-area">
-
-
-<div class="player" id="player">
-
-  <div class="video-tip" id="videoTip">
-    💡 Tips: Klik ikon fullscreen [ ] di pojok kanan bawah video untuk kenyamanan belajar. Jika tidak muncul, coba kecilkan/perbesar layar browser.
-    
-    <span class="tip-close" onclick="closeTip()">✖</span>
-  </div>
-
-  <div class="player-text">Pilih video</div>
-
-</div>
-
-
-
-<div id="content">
-
-<div class="loading">
-
-⏳ Memuat video...
-
-</div>
-
-</div>
-
-
-</div>
-
-
-
-<button class="back-btn" onclick="backDashboard()">
-
-⬅ Kembali
-
-</button>
-
-
-</div>
-
-
-`;
-
-setTimeout(() => {
-  if(localStorage.getItem("hideVideoTip") === "1"){
-    let tip = document.getElementById("videoTip");
-    if(tip){
-      tip.style.display = "none";
-    }
-  }
-}, 200);
+function renderTabelBatch(batches) {
+  let tbody = document.getElementById("bodyBatch"); let html = "";
+  if(batches.length === 0){ tbody.innerHTML = `<tr><td colspan="5" style="text-align:center;">Belum ada kelas</td></tr>`; return; }
   
-loadFolder(folder,code);
-
-
+  batches.forEach(b => {
+    let statusBadge = b.status === "AKTIF" ? `<span class="badge status-aktif" id="badge-batch-${b.id}">AKTIF</span>` : `<span class="badge status-nonaktif" id="badge-batch-${b.id}">NONAKTIF</span>`;
+    let actionBtn = b.status === "AKTIF" ? `<button class="btn-small btn-danger" id="btn-batch-${b.id}" onclick="toggleStatusBatch('${b.id}')">❌ Tutup Kelas</button>` : `<button class="btn-small" id="btn-batch-${b.id}" onclick="toggleStatusBatch('${b.id}')">✅ Buka Kelas</button>`;
+    
+    html += `<tr>
+        <td><strong>${b.name}</strong></td>
+        <td><code>${b.code}</code></td>
+        <td><span class="small" style="word-break: break-all;">${b.folder}</span></td>
+        <td>${statusBadge}</td>
+        <td>${actionBtn} <button class="btn-small btn-warning" onclick="bukaModalEditBatch('${b.id}', '${b.name}', '${b.code}', '${b.folder}')">📝 Edit</button></td>
+      </tr>`;
+  });
+  tbody.innerHTML = html;
 }
 
+function renderTabelLogs(logs) {
+  let tbody = document.getElementById("bodyLogs"); let html = "";
+  if(logs.length === 0){ tbody.innerHTML = `<tr><td colspan="4" style="text-align:center;">Belum ada aktivitas</td></tr>`; return; }
+  logs.forEach(l => {
+    html += `<tr><td><span class="small">${l.waktu}</span></td><td>${l.id}</td><td>${l.nama}</td><td><span class="badge" style="background:#4b5563;">${l.aktivitas}</span></td></tr>`;
+  });
+  tbody.innerHTML = html;
+}
 
+function bukaModalTambahBatch() {
+  document.getElementById('addBatchNama').value = ''; document.getElementById('addBatchKode').value = ''; document.getElementById('addBatchFolder').value = '';
+  document.getElementById('modalTambahBatch').style.display = 'flex';
+}
 
+function bukaModalEditBatch(id, nama, kode, folder) {
+  document.getElementById('editBatchId').value = id; document.getElementById('editBatchNama').value = nama;
+  document.getElementById('editBatchKode').value = kode; document.getElementById('editBatchFolder').value = folder;
+  document.getElementById('modalEditBatch').style.display = 'flex';
+}
 
-// ==========================================
-// LOAD FOLDER
-// ==========================================
+function submitTambahBatch() {
+  let nama = document.getElementById('addBatchNama').value, kode = document.getElementById('addBatchKode').value, folder = document.getElementById('addBatchFolder').value;
+  if(!nama || !kode || !folder) { alert("Semua kolom wajib diisi!"); return; }
+  let btn = document.getElementById('btnSubmitTambahBatch'); btn.innerHTML = "⏳ Menyimpan..."; btn.disabled = true;
 
+  fetch(API_URL + "?action=addBatch&nama=" + encodeURIComponent(nama) + "&kode=" + encodeURIComponent(kode) + "&folder=" + encodeURIComponent(folder))
+  .then(r => r.json()).then(res => {
+     btn.innerHTML = "💾 Simpan Kelas"; btn.disabled = false;
+     if(res.status === "success") { tutupModal(); fetchDataPengaturan(); } else { alert("Gagal: " + res.message); }
+  }).catch(err => { btn.innerHTML = "💾 Simpan Kelas"; btn.disabled = false; alert("Error jaringan."); });
+}
+
+function submitEditBatch() {
+  let id = document.getElementById('editBatchId').value, nama = document.getElementById('editBatchNama').value, kode = document.getElementById('editBatchKode').value, folder = document.getElementById('editBatchFolder').value;
+  if(!nama || !kode || !folder) { alert("Semua kolom wajib diisi!"); return; }
+  let btn = document.getElementById('btnSubmitEditBatch'); btn.innerHTML = "⏳ Mengupdate..."; btn.disabled = true;
+
+  fetch(API_URL + "?action=editBatch&id=" + encodeURIComponent(id) + "&nama=" + encodeURIComponent(nama) + "&kode=" + encodeURIComponent(kode) + "&folder=" + encodeURIComponent(folder))
+  .then(r => r.json()).then(res => {
+     btn.innerHTML = "💾 Update Kelas"; btn.disabled = false;
+     if(res.status === "success") { tutupModal(); fetchDataPengaturan(); } else { alert("Gagal: " + res.message); }
+  }).catch(err => { btn.innerHTML = "💾 Update Kelas"; btn.disabled = false; alert("Error jaringan."); });
+}
+
+function toggleStatusBatch(id) {
+  let btn = document.getElementById("btn-batch-" + id); let oldText = btn.innerHTML; btn.innerHTML = "⏳ Wait..."; btn.disabled = true;
+  fetch(API_URL + "?action=toggleStatusBatch&id=" + encodeURIComponent(id)).then(r => r.json())
+    .then(res => {
+      if(res.status === "success") { fetchDataPengaturan(); } else { alert("Gagal"); btn.innerHTML = oldText; btn.disabled = false; }
+    }).catch(err => { alert("Error jaringan"); btn.innerHTML = oldText; btn.disabled = false; });
+}
+
+function submitGantiPassword() {
+  let newPass = document.getElementById('newAdminPass').value;
+  if(newPass.length < 4) { alert("Password terlalu pendek!"); return; }
+  let btn = document.getElementById('btnGantiPass'); btn.innerHTML = "⏳ Menyimpan..."; btn.disabled = true;
+  
+  fetch(API_URL + "?action=changeAdminPassword&username=" + encodeURIComponent(userData.username) + "&newPass=" + encodeURIComponent(newPass))
+  .then(r => r.json()).then(res => {
+     btn.innerHTML = "💾 Simpan Password"; btn.disabled = false;
+     if(res.status === "success") { alert("Password berhasil diubah!"); document.getElementById('newAdminPass').value = ''; } else { alert("Gagal ganti password."); }
+  }).catch(err => { btn.innerHTML = "💾 Simpan Password"; btn.disabled = false; alert("Error jaringan."); });
+}
+
+/* =========================================================
+   FUNGSI OPEN CLASS (VIDEO DRIVE)
+   ========================================================= */
+function openClass(folder,name,code){
+  document.getElementById("app").innerHTML=`
+    <div class="container">
+      <h2>📚 ${name}</h2>
+      <div class="video-wrapper">
+        <div class="video-area">
+          <div class="player" id="player"><div class="player-text">Pilih video</div></div>
+          <div id="content"><div class="loading">⏳ Memuat video...</div></div>
+        </div>
+      </div>
+      <div class="video-note">
+        💡 <strong>Tips:</strong> Klik ikon <code>[ ]</code> (full screen) di pojok video untuk kenyamanan belajar. Jika ikon tidak muncul, coba perkecil ukuran jendela browser Anda.
+      </div>
+      <button class="back-btn" onclick="backDashboard()">⬅ Kembali</button>
+    </div>
+  `;
+  loadFolder(folder,code);
+}
 
 function loadFolder(folder,code){
-
-
-
-fetch(
-
-API_URL+
-
-"?action=content"+
-"&folder="+folder+
-"&kode="+code
-
-)
-
-
-
-.then(r=>r.json())
-
-
-.then(data=>{
-
-
-if(data.status=="error"){
-
-document.getElementById("content")
-.innerHTML=
-
-"❌ "+data.message;
-
-return;
-
+  fetch(API_URL+"?action=content&folder="+folder+"&kode="+code)
+  .then(r=>r.json())
+  .then(data=>{
+    if(data.status=="error"){ document.getElementById("content").innerHTML="❌ "+data.message; return; }
+    showContent(data);
+  }).catch(()=>{ document.getElementById("content").innerHTML="❌ Gagal mengambil video"; });
 }
-
-
-showContent(data);
-
-
-})
-
-
-.catch(()=>{
-
-
-document.getElementById("content")
-.innerHTML=
-
-"❌ Gagal mengambil video";
-
-
-});
-
-
-}
-
-
-
-
-
-
-
-
-
-// ==========================================
-// TAMPILKAN FOLDER & VIDEO
-// ==========================================
-
 
 function showContent(data){
-
-
-let box =
-document.getElementById("content");
-
-
-box.innerHTML="";
-
-
-renderItems(
-data,
-box,
-0
-);
-
-
+  let box = document.getElementById("content");
+  box.innerHTML=""; renderItems(data,box,0);
 }
-
-
-
 
 function renderItems(items,container,level){
-
-
-
-items.forEach(item=>{
-
-
-
-// =====================
-// VIDEO
-// =====================
-
-
-if(item.type=="video"){
-
-
-let div =
-document.createElement("div");
-
-
-div.className="item";
-
-
-div.innerHTML=
-
-"🎬 "+item.name;
-
-
-
-div.onclick=function(){
-
-playVideo(item.id);
-
-};
-
-
-
-container.appendChild(div);
-
-
+  items.forEach(item=>{
+    if(item.type=="video"){
+      let div = document.createElement("div"); div.className="item"; div.innerHTML="🎬 "+item.name;
+      div.onclick=function(){ playVideo(item.id); }; container.appendChild(div);
+    }
+    if(item.type=="folder"){
+      let folderBox = document.createElement("div"); folderBox.className="card"; folderBox.style.marginLeft = (level*15)+"px";
+      let title = document.createElement("h3"); title.innerHTML="📁 "+item.name; folderBox.appendChild(title);
+      let childBox = document.createElement("div"); folderBox.appendChild(childBox); container.appendChild(folderBox);
+      renderItems(item.children, childBox, level+1);
+    }
+  });
 }
-
-
-
-
-
-// =====================
-// FOLDER
-// =====================
-
-
-if(item.type=="folder"){
-
-
-
-let folderBox =
-document.createElement("div");
-
-
-folderBox.className="card";
-
-
-
-folderBox.style.marginLeft =
-(level*15)+"px";
-
-
-
-let title =
-document.createElement("h3");
-
-
-title.innerHTML=
-
-"📁 "+item.name;
-
-
-
-folderBox.appendChild(title);
-
-
-
-
-
-let childBox =
-document.createElement("div");
-
-
-
-folderBox.appendChild(childBox);
-
-
-
-container.appendChild(folderBox);
-
-
-
-renderItems(
-
-item.children,
-
-childBox,
-
-level+1
-
-);
-
-
-
-}
-
-
-
-});
-
-
-
-}
-
-
-
-
-
-
-
-
-// ==========================================
-// VIDEO PLAYER DRIVE
-// ==========================================
-
 
 function playVideo(id){
-
-
-
-let player =
-document.getElementById("player");
-
-
-
-player.innerHTML=`
-
-<iframe
-
-src="https://drive.google.com/file/d/${id}/preview"
-
-allow="autoplay; fullscreen"
-
-allowfullscreen="true"
-
-webkitallowfullscreen="true"
-
-mozallowfullscreen="true">
-
-</iframe>
-
-`;
-
-
-
+  let player = document.getElementById("player");
+  player.innerHTML=`<iframe src="https://drive.google.com/file/d/${id}/preview" allow="autoplay; fullscreen" allowfullscreen="true" webkitallowfullscreen="true" mozallowfullscreen="true"></iframe>`;
 }
-
-
-
-
-
-
-
-// ==========================================
-// KEMBALI
-// ==========================================
-
 
 function backDashboard(){
-
-
-if(userData.role=="admin"){
-
-showAdmin();
-
-}
-
-else{
-
-showPeserta();
-
-}
-
-
-}
-
-
-
-
-
-
-
-// ==========================================
-// AUTO LOGIN
-// ==========================================
-
-
-function togglePassword(){
-
-  let input = document.getElementById("password");
-  let icon = document.getElementById("eyeIcon");
-
-  if(!input || !icon) return;
-
-  input.style.opacity = "0.3";
-
-  setTimeout(() => {
-
-    if(input.type === "password"){
-      input.type = "text";
-      icon.innerHTML = "🙈";
-    } else {
-      input.type = "password";
-      icon.innerHTML = "👁";
-    }
-
-    input.style.opacity = "1";
-
-  }, 150);
-
-}
-
-function closeTip(){
-  let tip = document.getElementById("videoTip");
-  if(tip){
-    tip.style.display = "none";
-  }
+  if(userData.role=="admin"){ showAdmin(); } else{ showPeserta(); }
 }
 </script>
-
-
-
 </body>
-
 </html>
